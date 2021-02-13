@@ -6,7 +6,7 @@ pg.init()
 screen = pg.display.set_mode(size)
 switch = True
 
-image = pg.image.load("sample2.jpg")
+image = pg.image.load("sample.jpg")
 image = pg.transform.scale(image,(500,500))
 screen.blit(image,(0,0))
 
