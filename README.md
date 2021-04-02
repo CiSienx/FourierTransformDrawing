@@ -2,6 +2,10 @@
 
 requirements :  1) Numpy (pip install numpy)
                 2) cv2 (pip install opencv-python)
+                3) json
+                4) tqdm
+                5) pygame
+                6) keyboard
                 
 help:
   1) first recoord coordinates with "RecordCoordinates.py"
