@@ -1,13 +1,16 @@
+import pygame as pg
 import numpy as np
+import keyboard as key
 import json
+import tqdm
 
 size = (700, 700)
-Switch = True
 load = True
 coord = []
 position = (350,350)
-aqurcy = 100
-file = open("venv/coordinate_love.txt","r")
+aqurcy = 20
+skip = 5
+file = open("coordinate.txt","r")
 
 pg.init()
 screen = pg.display.set_mode((size))
@@ -19,7 +22,7 @@ def FFT(coords):
     N = len(coords)
     phi = -np.pi/N
     A_F_P = []          #Amplitude, Frequency, Phase
-    for i in range(1-N,N):
+    for i in tqdm.tqdm(range(1-N,N)):
         F = i
         ansX = 0
         ansY = 0
@@ -32,6 +35,12 @@ def FFT(coords):
         P = np.arctan2(ansY,ansX) + np.pi
         A_F_P.append([A,F,P])
     return A_F_P
+
+def control():
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            pg.quit()
+            break
 
 class Arms:
     def __init__(self,pos,amp,color,phase,fre):
@@ -61,16 +70,20 @@ def Loading(x,position):
             position = globals()["arm"+str(i-1)].position()
     return len(A_F_P)
 
-while Switch:
+while True:
+    control()
+    if key.is_pressed("q"):
+        break
                             # beginning position
     if load:
         new_coord = []
         coord = []
-        coord = np.asarray(json.load(file))
+        coord = json.load(file)
         #coord.resize((200,2))
         print("No. of coordnates"+str(len(coord)))
-        for i in range(0, int(len(coord))):
+        for i in range(0,len(coord),skip):
             new_coord.append((250 - coord[i][0],250 - coord[i][1]))
+        print(len(new_coord))
         arm_no = Loading(new_coord,position)
         aqurcy = int(arm_no*(100-aqurcy)/100)
         print("No. of circles "+str(arm_no - aqurcy))
