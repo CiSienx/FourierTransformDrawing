@@ -8,7 +8,7 @@ size = (700, 700)
 load = True
 coord = []
 position = (350,350)
-aqurcy = 20
+aqurcy = int(input('how much acquracy do you want? '))
 skip = 5
 file = open("coordinate.txt","r")
 
